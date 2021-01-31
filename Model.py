@@ -213,23 +213,27 @@ model_cross2 = BaggingClassifier(base_estimator=SVC(),n_estimators=250, random_s
 model_cross2.fit(X_train, y_train.ravel())
 print("Bagging Classifier",model_cross2.score(X_train,y_train.ravel()))
 y_pred=model_cross2.predict(X_test)
-
 print (classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 model_scores2=model_selection.cross_val_score(model_cross2,X_train,y_train.ravel(),cv=15)
-print(" Bagging Classifiers ",model_scores2.mean())
+print(" Bagging Classifiers Cross Val:",model_scores2.mean())
 print("-----------------------------------------------------")
 
 # cross-fold  model 4
 model_cross3 = DecisionTreeClassifier()
-model_scores3=model_selection.cross_val_score(model_cross3,X_train,y_train.ravel(),cv=15)
-print(" Decision tree ",model_scores3.mean())
+model_cross3.fit(X_train, y_train.ravel())
+y_pred=model_cross3.predict(X_test)
+print (classification_report(y_test, y_pred))
+print(confusion_matrix(y_test, y_pred))
+print(" Decision tree ",model_cross3.score(X_train,y_train.ravel()))
+
+print("-----------------------------------------------------")
 
 forest = RandomForestClassifier(n_estimators=250, random_state=0)
 forest.fit(X_train, y_train.ravel())
-importances = forest.feature_importances_
-print("Random Forrest Classifier",forest.score(X_train,y_train.ravel()))
 y_pred=forest.predict(X_test)
-
 print (classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
+print("Random Forrest Classifier",forest.score(X_train,y_train.ravel()))
+y_pred=forest.predict(X_test)
+print("-----------------------------------------------------")
